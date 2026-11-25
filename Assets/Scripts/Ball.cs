@@ -6,12 +6,13 @@ public class Ball : MonoBehaviour
 
 
     float
-            constantXSpeed = 8f,
+            maxXSpeed = 20f,
+            startXSpeed = 8f,
             constantYSpeed = 10f,
-		extents = 0.5f;
-        public float Extents => extents;
-	
-	public Vector2 Position => position;
+        extents = 0.5f;
+    public float Extents => extents;
+
+    public Vector2 Position => position;
 
 
     Vector2 position, velocity;
@@ -32,7 +33,7 @@ public class Ball : MonoBehaviour
     {
         position = Vector2.zero;
         UpdateVisualization();
-        velocity = new Vector2(constantXSpeed, -constantYSpeed);
+        velocity = new Vector2(startXSpeed, -constantYSpeed);
     }
     public void Move() => position += velocity * Time.deltaTime;
 
@@ -44,15 +45,20 @@ public class Ball : MonoBehaviour
         position.x = 2f * boundary - position.x;
         velocity.x = -velocity.x;
     }
-    
+
 
     public void BounceY(float boundary)
     {
         position.y = 2f * boundary - position.y;
         velocity.y = -velocity.y;
     }
-    
-    
+
+    public void SetXPositionAndSpeed(float start, float speedFactor, float deltaTime)
+    {
+        velocity.x = maxXSpeed * speedFactor;
+        position.x = start + velocity.x * deltaTime;
+    }
+    public Vector2 Velocity => velocity;
 }
 
 
